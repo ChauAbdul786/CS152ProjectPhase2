@@ -1,9 +1,10 @@
    /* cs152-miniL phase1 */
    
-%{   
+%{ 
+   #include "y.tab.h"  
    /* write your C code here for definitions of variables and including headers */
    int currLine, currPos = 1;
-er%}
+%}
 
    /* some common rules */
 LETTER [a-z|A-Z]
