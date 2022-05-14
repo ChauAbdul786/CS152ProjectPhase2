@@ -1,0 +1,37 @@
+program -> functions
+
+functions -> function functions | epsilon
+function -> FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
+
+declarations -> declaration SEMICOLON declarations | epsilon
+declaration -> idents COLON NUMBER | idents COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF NUMBER | ENUM L_PAREN idents R_PAREN
+
+idents -> IDENT COMMA idents | epsilon
+
+statements -> statement SEMICOLON statements | epsilon 
+statement -> varstatment | ifstatement | whilestatement | dostatement | readstatement | writestatement | CONTINUE | returnstatement
+
+varstatement -> var ASSIGN expression
+ifstatement -> IF boolexp THEN statements ENDIF | IF boolexp THEN statement SEMICOLON ELSE statments ENDIF
+whilestatment -> WHILE boolexp BEGINLOOP statements ENDLOOP
+dostatement -> DO BEGINLOOP statements ENDLOOP WHILE boolexp
+readstatement -> READ vars
+writestatement -> WRITE vars
+returnstatement -> RETURN expression
+
+boolexp -> relationandexp | relationandexp OR boolexp
+relationandexp -> relationexp | relationexp AND relationandexp
+relationexp -> notexp expression comp expression | notexp TRUE | notexp FALSE | notexp L_PAREN boolexp R_PAREN 
+notexp -> NOT | epsilon 
+
+comp -> EQ | NEQ | LT | GT | LTE | GTE
+
+expressions -> expression COMMA expressions | epsilon
+expression -> multexp addsubexp
+ 
+addsubexp -> ADD expression | SUB expression | epsilon
+multexp -> term | term MULT multexp | term DIV multexp | term MOD multexp 
+term -> minusexp var | minusexp NUMBER | minusexp L_PAREN expression R_PAREN | IDENT L_PAREN expressions R_PAREN
+minusexp -> SUB | epsilon 
+
+var -> IDENT | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET
